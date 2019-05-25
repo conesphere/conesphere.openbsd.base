@@ -1,0 +1,42 @@
+---
+# tasks file for conesphere.openbsd.base
+- template:
+    dest: "/etc/hostname.{{ item.key }}"
+    src: "hostname_if.j2"
+    owner: root
+    group: wheel
+    mode: "0640"
+  with_dict: "{{ hostname_if|default({}) }}"
+  notify: run_netstart
+- template:
+    dest: "/etc/pf.conf"
+    src: "pf.conf.j2"
+    owner: root
+    group: wheel
+    mode: "0600"
+  notify: load_pf_conf
+  when: pf_conf is defined
+- template:
+    dest: "/etc/resolv.conf"
+    src: "resolv.conf.j2"
+    owner: root
+    group: wheel
+    mode: "0644"
+  when: resolv_conf is defined
+- name: setup kernel parameters
+  sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+  with_dict: "{{ openbsd_sysctl|default({}) }}"
+- openbsd_pkg:
+    name:
+      - vim--gtk3-perl-python3-ruby
+    state: absent
+- openbsd_pkg:
+    name:
+      - vim--no_x11-python3-perl-ruby
+      - sl
+      - htop
+      - git
+    state: latest

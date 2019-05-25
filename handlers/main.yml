@@ -1,0 +1,8 @@
+---
+# handlers file for conesphere.openbsd.base
+- name: run_netstart
+  shell: ksh /etc/netstart
+- name: load_pf_conf
+  shell: pfctl -f /etc/pf.conf
+
+
