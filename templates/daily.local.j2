@@ -1,0 +1,6 @@
+#!/bin/sh
+{% if openbsd_daily_verbosestatus == False %}
+VERBOSESTATUS=0
+{% else %}
+VERBOSESTATUS=1
+{% endif %}

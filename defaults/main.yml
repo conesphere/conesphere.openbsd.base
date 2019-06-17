@@ -1,2 +1,6 @@
 ---
 # defaults file for conesphere.openbsd.base
+#
+# This setting causes /etc/daily to not to send a mail every day
+openbsd_daily_verbosestatus: False
+

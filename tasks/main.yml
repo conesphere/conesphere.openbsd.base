@@ -40,3 +40,10 @@
       - htop
       - git
     state: latest
+- name: configure daily.local
+  template:
+    dest: "/etc/daily.local"
+    src: daily.local.j2"
+    owner: root
+    group: wheel
+    mode: "0644"
